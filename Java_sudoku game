@@ -1,0 +1,175 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class suduko {
+
+    static int No = 9;
+
+
+    static boolean isinRange(int[][] board) {
+
+        
+        for (int i = 0; i < No; i++) {
+            for (int j = 0; j < No; j++) {
+
+               
+               
+                if (board[i][j] <= 0
+                        || board[i][j] > 3) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    static boolean isValidSudoku(int board[][]) {
+
+        
+        if (isinRange(board) == false) {
+            return false;
+        }
+
+       
+        boolean[] unique = new boolean[No + 1];
+
+        
+        for (int i = 0; i < No; i++) {
+
+            
+            Arrays.fill(unique, false);
+
+            
+            for (int j = 0; j < No; j++) {
+
+                
+                int Z = board[i][j];
+
+               
+                if (unique[Z]) {
+                    return false;
+                }
+                unique[Z] = true;
+            }
+        }
+
+      
+        for (int i = 0; i < No; i++) {
+
+            
+            Arrays.fill(unique, false);
+
+          
+            for (int j = 0; j < No; j++) {
+
+                
+                int Z = board[j][i];
+
+                
+                if (unique[Z]) {
+                    return false;
+                }
+                unique[Z] = true;
+            }
+        }
+
+       
+        for (int i = 0; i < No - 2; i += 3) {
+
+          
+            for (int j = 0; j < No - 2; j += 3) {
+
+               
+                Arrays.fill(unique, false);
+
+               
+                for (int k = 0; k < 3; k++) {
+                    for (int l = 0; l < 3; l++) {
+
+                        
+                        int X = i + k;
+
+                        
+                        int Y = j + l;
+
+                        
+                        int Z = board[X][Y];
+
+                        
+                        if (unique[Z]) {
+                            return false;
+                        }
+                        unique[Z] = true;
+                    }
+                }
+            }
+        }
+
+        // If all conditions satisfied
+        return true;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("\tSUDOKU!\n");
+        System.out.println("         3, 0, 6, 5, 0, 8, 4, 0, 0 \n"
+                + "         5, 2, 0, 0, 0, 0, 0, 0, 0 \n"
+                + "         0, 8, 7, 0, 0, 0, 0, 3, 1 \n"
+                + "         0, 0, 3, 0, 1, 0, 0, 8, 0 \n"
+                + "         9, 0, 0, 8, 6, 3, 0, 0, 5 \n"
+                + "         0, 5, 0, 0, 9, 0, 6, 0, 0 \n"
+                + "         1, 3, 0, 0, 0, 0, 2, 5, 0 \n"
+                + "         0, 0, 0, 0, 0, 0, 0, 7, 4 \n"
+                + "         0, 0, 5, 2, 0, 6, 3, 0, 0");
+
+        int n, i = 0, j = 0;
+        int inputcol = 0;
+        int inputrow = 0;
+        int newnum = 0;
+        int uinput = 0;
+        int repeat = 1;
+        int[][] board = {{3, 0, 6, 5, 0, 8, 4, 0, 0},
+        {5, 2, 0, 0, 0, 0, 0, 0, 0},
+        {0, 8, 7, 0, 0, 0, 0, 3, 1},
+        {0, 0, 3, 0, 1, 0, 0, 8, 0},
+        {9, 0, 0, 8, 6, 3, 0, 0, 5},
+        {0, 5, 0, 0, 9, 0, 6, 0, 0},
+        {1, 3, 0, 0, 0, 0, 2, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 7, 4},
+        {0, 0, 5, 2, 0, 6, 3, 0, 0}
+        };
+
+        while (repeat != 0) {
+            System.out.println("Select Option: 2 for Replace Value: ");
+            uinput = s.nextInt();
+
+            if (uinput == 2) {
+                System.out.println("Enter Row: ");
+                inputrow = s.nextInt();
+                System.out.println("Enter Cols:");
+                inputcol = s.nextInt();
+                System.out.println("Enter New Number: ");
+                newnum = s.nextInt();
+                board[inputrow][inputcol] = newnum;
+                for (inputrow = 0; inputrow < board.length; inputrow++) {
+                    for (inputcol = 0; inputcol < board[0].length; inputcol++) {
+                        System.out.print(board[inputrow][inputcol] + " ");
+                    }
+                    System.out.println();
+                }
+            }
+            System.out.println("Want to repeat it? if yes press 1\n for exit press 0 ");
+            repeat = s.nextInt();
+        }
+        if (isValidSudoku(board)) {
+            System.out.println("Valid");
+        } else {
+            System.out.println("Not Valid");
+        }
+    }
+}
